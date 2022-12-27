@@ -30,13 +30,21 @@
         </li>
 
         <li class="nav-item">
-            <a class="nav-link" href="/surat-masuk">
+            <a class="nav-link" href="/admin/kategori">
+                <img class="fas fa-fw icon-sidebar" src="{{ asset('img/sidebar/mail-in.svg') }}"></img>
+                <span>Kategori</span>
+            </a>
+        </li>
+
+
+        <li class="nav-item">
+            <a class="nav-link" href="/admin/surat-masuk">
                 <img class="fas fa-fw icon-sidebar" src="{{ asset('img/sidebar/mail-in.svg') }}"></img>
                 <span>Surat Masuk</span></a>
         </li>
 
         <li class="nav-item">
-            <a class="nav-link" href="/surat-keluar">
+            <a class="nav-link" href="/admin/surat-keluar">
                 <img class="fas fa-fw icon-sidebar" src="{{ asset('img/sidebar/mail-out.svg') }}"></img>
                 <span>Surat Keluar</span></a>
         </li>
