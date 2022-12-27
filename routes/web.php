@@ -1,5 +1,10 @@
 <?php
 
+use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\IncomingMailController;
+use App\Http\Controllers\OutgoingMailController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,9 +19,14 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return redirect('home');
+    return redirect('/admin/home');
 });
-Route::get('/home', function () {
-    return view('template.template');
+
+Route::group(['prefix' => 'admin'], function () {
+    Route::get('/home', [HomeController::class, 'index'])->name('home');
+
+    Route::resource('/surat-masuk', IncomingMailController::class);
+    Route::resource('/surat-keluar', OutgoingMailController::class);
+    Route::resource('/kategori', CategoryController::class);
+    Route::resource('/user', UserController::class);
 });
-   
