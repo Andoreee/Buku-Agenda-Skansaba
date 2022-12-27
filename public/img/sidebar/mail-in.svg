@@ -1,0 +1,9 @@
+<svg version="1.2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 90 90" width="90" height="90">
+	<title>image</title>
+	<style>
+		.s0 { fill: none;stroke: #ffffff;stroke-linecap: round;stroke-linejoin: round;stroke-width: 4 } 
+	</style>
+	<path id="Layer" class="s0" d="m67.5 28.1h15v48.8h-75v-48.8h15m22.5 7.5v-26.2"/>
+	<path id="Layer" class="s0" d="m56.3 24.4l-11.3 11.2-11.2-11.2"/>
+	<path id="Layer" class="s0" d="m82.5 28.1l-37.5 28.1-37.5-28.1"/>
+</svg>
