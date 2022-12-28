@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\IncomingMailController;
@@ -19,16 +20,21 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return redirect('/admin/home');
+    return redirect('/admin/login');
 });
-Route::get('/login', function () {
-    return view('login');
-});
-Route::group(['prefix' => 'admin'], function () {
-    Route::get('/home', [HomeController::class, 'index'])->name('home');
 
-    Route::resource('/surat-masuk', IncomingMailController::class);
-    Route::resource('/surat-keluar', OutgoingMailController::class);
-    Route::resource('/kategori', CategoryController::class);
-    Route::resource('/user', UserController::class);
+Route::group(['prefix' => 'admin'], function () {
+    Route::group(['middleware' => 'guest'], function () {
+        Route::get('/login', [AuthController::class, 'login'])->name('login');
+        Route::post('/login', [AuthController::class, 'authenticate']);
+    });
+
+    Route::group(['middleware' => 'auth'], function () {
+        Route::get('/home', [HomeController::class, 'index'])->name('home');
+
+        Route::resource('/surat-masuk', IncomingMailController::class);
+        Route::resource('/surat-keluar', OutgoingMailController::class);
+        Route::resource('/kategori', CategoryController::class);
+        Route::resource('/user', UserController::class);
+    });
 });

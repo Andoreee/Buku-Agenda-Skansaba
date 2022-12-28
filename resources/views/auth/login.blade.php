@@ -23,7 +23,7 @@
 </head>
 
 <body class="bg-gradient-primary">
-
+    @include('sweetalert::alert')
     <div class="container">
 
         <!-- Outer Row -->
@@ -41,17 +41,31 @@
                                         <h1 class="h4 text-gray-900">Buku Agenda Skansaba</h1>
                                         <h2 class="h4 text-gray-900 mb-4">Login</h2>
                                     </div>
-                                    <form class="user">
+                                    <form class="user" action="/admin/login" method="POST">
+                                        @csrf
                                         <div class="form-group">
                                             <label for="InputEmail">Email Address</label>
-                                            <input type="email" class="form-control form-control-user"
-                                                id="InputEmail" aria-describedby="emailHelp"
-                                                placeholder="Enter Email Address...">
+                                            <input type="email"
+                                                class="form-control form-control-user @error('email') is-invalid @enderror"
+                                                id="InputEmail" aria-describedby="emailHelp" name="email"
+                                                placeholder="Enter Email Address..." value="{{ old('email') }}"
+                                                required autofocus>
+                                            @error('email')
+                                                <div class="invalid-message">
+                                                    {{ $message }}
+                                                </div>
+                                            @enderror
                                         </div>
                                         <div class="form-group">
                                             <label for="InputPassword">Password</label>
-                                            <input type="password" class="form-control form-control-user"
-                                                id="InputPassword" placeholder="Password">
+                                            <input type="password"
+                                                class="form-control form-control-user @error('password') is-invalid @enderror"
+                                                id="InputPassword" name="password" placeholder="Password" required>
+                                            @error('password')
+                                                <div class="invalid-message">
+                                                    {{ $message }}
+                                                </div>
+                                            @enderror
                                         </div>
                                         <div class="form-group">
                                             <div class="custom-control custom-checkbox small">
@@ -60,9 +74,7 @@
                                                     Me</label>
                                             </div>
                                         </div>
-                                        <a href="/admin/home" class="btn btn-primary btn-user btn-block">
-                                            Login
-                                        </a>
+                                        <button type="submit" class="btn btn-primary btn-user btn-block">Login</button>
                                         <hr>
                                     </form>
                                     <div class="text-center">

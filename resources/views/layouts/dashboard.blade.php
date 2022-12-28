@@ -29,7 +29,7 @@
 
 <body id="page-top">
     <div id="wrapper">
-
+        @include('sweetalert::alert')
         @include('components.sidebar')
 
         <div id="content-wrapper" class="d-flex flex-column" id="content-wrapper">
