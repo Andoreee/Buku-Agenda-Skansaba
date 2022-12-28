@@ -1,3 +1,11 @@
+// Data Table
+$(document).ready(function() {
+    $('#dataTable').DataTable( {
+        // rowReorder: true
+    } );
+  });
+  
+
 function sidebar() {
     var display = document.getElementById("tooglesidebar");
     if (display.style.display === "none") {
