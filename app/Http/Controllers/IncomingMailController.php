@@ -13,7 +13,9 @@ class IncomingMailController extends Controller
      */
     public function index()
     {
-        //
+        return view('incoming-mail.index', [
+            'title' => 'Surat Masuk'
+        ]);
     }
 
     /**

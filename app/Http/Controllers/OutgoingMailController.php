@@ -13,7 +13,9 @@ class OutgoingMailController extends Controller
      */
     public function index()
     {
-        //
+        return view('outgoing-mail.index', [
+            'title' => 'Surat Keluar'
+        ]);
     }
 
     /**

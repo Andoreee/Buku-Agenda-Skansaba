@@ -21,7 +21,9 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return redirect('/admin/home');
 });
-
+Route::get('/login', function () {
+    return view('login');
+});
 Route::group(['prefix' => 'admin'], function () {
     Route::get('/home', [HomeController::class, 'index'])->name('home');
 
