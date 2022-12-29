@@ -25,7 +25,9 @@ class IncomingMailController extends Controller
      */
     public function create()
     {
-        //
+        return view('incoming-mail.create', [
+            'title' => 'Surat Masuk'
+        ]);
     }
 
     /**
@@ -47,7 +49,10 @@ class IncomingMailController extends Controller
      */
     public function show($id)
     {
-        //
+        return view('incoming-mail.index', [
+            'title' => 'Surat Masuk',
+            'detail' => $id
+        ]);
     }
 
     /**
@@ -58,7 +63,9 @@ class IncomingMailController extends Controller
      */
     public function edit($id)
     {
-        //
+        return view('incoming-mail.edit', [
+            'title' => 'Surat Masuk'
+        ]);
     }
 
     /**

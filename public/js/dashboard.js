@@ -4,7 +4,7 @@ $(document).ready(function() {
         // rowReorder: true
     } );
   });
-  
+
 
 function sidebar() {
     var display = document.getElementById("tooglesidebar");
