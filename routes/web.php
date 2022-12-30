@@ -36,5 +36,7 @@ Route::group(['prefix' => 'admin'], function () {
         Route::resource('/surat-keluar', OutgoingMailController::class)->except('show');
         Route::resource('/kategori', CategoryController::class)->except('show');
         Route::resource('/user', UserController::class);
+
+        Route::post('/logout', [AuthController::class, 'logout']);
     });
 });

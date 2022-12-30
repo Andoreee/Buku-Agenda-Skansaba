@@ -2,9 +2,9 @@
 
 @section('content')
     <div class="container-fluid">
-        <h1 class="h3 mb-4 text-white">Tambah Surat Masuk</h1>
+        <h1 class="h3 mb-4 text-white">Tambah Surat Keluar</h1>
         <div class="card shadow mb-4">
-            <form action="/admin/surat-masuk" method="POST" class="card-body" enctype="multipart/form-data">
+            <form action="/admin/surat-keluar" method="POST" class="card-body" enctype="multipart/form-data">
                 @csrf
                 <div class="mb-3">
                     <label for="Tanggal-Surat" class="form-label">Tanggal Surat</label>
@@ -45,10 +45,10 @@
                     @enderror
                 </div>
                 <div class="mb-3">
-                    <label for="Tujuan" class="form-label">Tujuan</label>
-                    <input type="text" class="form-control @error('pengirim') is-invalid @enderror" name="pengirim"
-                        id="Tujuan" placeholder="Tujuan..." value="{{ old('pengirim') }}" required>
-                    @error('pengirim')
+                    <label for="tujuan" class="form-label">Tujuan</label>
+                    <input type="text" class="form-control @error('pengirim') is-invalid @enderror" name="tujuan"
+                        id="tujuan" placeholder="Tujuan..." value="{{ old('pengirim') }}" required>
+                    @error('tujuan')
                         <div class="invalid-message">
                             {{ $message }}
                         </div>
@@ -75,7 +75,7 @@
                     @enderror
                 </div>
                 <button type="submit" class="btn btn-primary mb-3 float-right">Ok</button>
-                <button type="reset" class="btn btn-outline-primary mr-3 float-right">Batal</button>
+                <a href="/admin/surat-keluar" class="btn btn-outline-primary mr-3 float-right">Batal</a>
             </form>
         </div>
     </div>

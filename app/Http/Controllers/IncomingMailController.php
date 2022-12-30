@@ -14,10 +14,16 @@ class IncomingMailController extends Controller
 {
     public function index()
     {
+        $incomingMail = IncomingMail::latest();
+
+        if (request('kategori') && request('kategori') != 'all') {
+            $incomingMail->where('category_id', request('kategori'));
+        }
+
         return view('incoming-mail.index', [
             'title' => 'Surat Masuk',
             'categories' => Category::latest()->get(),
-            'incomingMails' => IncomingMail::latest()->with('user', 'category')->limit(1000)->get()
+            'incomingMails' => $incomingMail->with('user', 'category')->limit(1000)->get()
         ]);
     }
 
@@ -83,6 +89,10 @@ class IncomingMailController extends Controller
             'keterangan' => '',
         ];
 
+        if ($request->old_no_surat != $request->no_surat) {
+            $rules['no_surat'] = 'required|max:255|unique:incoming_mails';
+        }
+
         if ($request->use_file == 'true') {
             $validatedData = $request->validate($rules);
         } else {
@@ -116,7 +126,7 @@ class IncomingMailController extends Controller
 
         IncomingMail::destroy($incomingMail->id);
 
-        Alert::success('success', 'Data Surat Masuk Berhasil Dihapus');
+        Alert::success('Berhasil', 'Berhasil Menghapus Data Surat Masuk');
         return redirect('/admin/surat-masuk');
     }
 }

@@ -8,6 +8,7 @@
                 enctype="multipart/form-data">
                 @method('put')
                 @csrf
+                <input type="hidden" name="old_no_surat" value="{{ $outgoingMail->no_surat }}">
                 <div class="mb-3">
                     <label for="Tanggal-Terima" class="form-label">Tanggal Terima</label>
                     <input type="date" class="form-control @error('tanggal_terima') is-invalid @enderror"

@@ -22,9 +22,8 @@
                                     <p>Tanggal Surat </p>
                                     <p>No Surat </p>
                                     <p>Kategori Surat </p>
-                                    <p>Pengirim </p>
+                                    <p>Tujuan </p>
                                     <p>Perihal </p>
-                                    <p>Keterangan </p>
                                 </td>
                                 <td>
                                     <p>: {{ $outgoingMail->user->name }}</p>
@@ -32,9 +31,8 @@
                                     <p>: {{ $outgoingMail->tanggal_surat }}</p>
                                     <p>: {{ $outgoingMail->no_surat }}</p>
                                     <p>: {{ $outgoingMail->category->name }}</p>
-                                    <p>: {{ $outgoingMail->pengirim }}</p>
+                                    <p>: {{ $outgoingMail->tujuan }}</p>
                                     <p>: {{ $outgoingMail->perihal }}</p>
-                                    <p>: {{ $outgoingMail->keterangan }}</p>
                                 </td>
                             </table>
                         </div>

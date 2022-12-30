@@ -21,7 +21,6 @@ return new class extends Migration
             $table->unsignedBigInteger('category_id');
             $table->string('tujuan');
             $table->string('perihal');
-            $table->text('keterangan');
             $table->string('file');
             $table->timestamps();
 

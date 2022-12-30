@@ -2,12 +2,13 @@
 
 @section('content')
     <div class="container-fluid">
-        <h1 class="h3 mb-4 text-white">Edit Surat Masuk</h1>
+        <h1 class="h3 mb-4 text-white">Edit Surat Keluar</h1>
         <div class="card shadow mb-4">
-            <form action="/admin/surat-masuk/{{ $outgoingMail->id }}" method="POST" class="card-body"
+            <form action="/admin/surat-keluar/{{ $outgoingMail->id }}" method="POST" class="card-body"
                 enctype="multipart/form-data">
                 @method('put')
                 @csrf
+                <input type="hidden" name="old_no_surat" value="{{ $outgoingMail->no_surat }}">
                 <div class="mb-3">
                     <label for="Tanggal-Surat" class="form-label">Tanggal Surat</label>
                     <input type="date" class="form-control @error('tanggal_surat') is-invalid @enderror"
@@ -48,11 +49,10 @@
                     @enderror
                 </div>
                 <div class="mb-3">
-                    <label for="Tujuan" class="form-label">Tujuan</label>
-                    <input type="text" class="form-control @error('pengirim') is-invalid @enderror" name="pengirim"
-                        id="Tujuan" placeholder="Tujuan..." value="{{ old('pengirim', $outgoingMail->pengirim) }}"
-                        required>
-                    @error('pengirim')
+                    <label for="tujuan" class="form-label">Tujuan</label>
+                    <input type="text" class="form-control @error('pengirim') is-invalid @enderror" name="tujuan"
+                        id="tujuan" placeholder="Tujuan..." value="{{ old('tujuan', $outgoingMail->tujuan) }}" required>
+                    @error('tujuan')
                         <div class="invalid-message">
                             {{ $message }}
                         </div>
