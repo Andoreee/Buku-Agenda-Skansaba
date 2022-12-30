@@ -31,7 +31,7 @@
 
         <li class="nav-item {{ ($title) === "Semua Kategori" ? 'active' : '' }}">
             <a class="nav-link" href="/admin/kategori">
-                <img class="fas fa-fw icon-sidebar" src="{{ asset('img/sidebar/mail-in.svg') }}"></img>
+                <img class="fas fa-fw icon-sidebar" src="{{ asset('img/sidebar/kategori.svg') }}"></img>
                 <span>Kategori</span>
             </a>
         </li>

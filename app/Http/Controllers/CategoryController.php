@@ -25,7 +25,9 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        //
+        return view('category.create', [
+            'title' => 'Semua Kategori'
+        ]);
     }
 
     /**
@@ -58,7 +60,9 @@ class CategoryController extends Controller
      */
     public function edit($id)
     {
-        //
+        return view('category.edit', [
+            'title' => 'Semua Kategori'
+        ]);
     }
 
     /**

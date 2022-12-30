@@ -21,7 +21,7 @@ html, body{
     margin-left: 5;
 }
 .icon-sidebar {
-  filter: invert(30%) sepia(97%) saturate(523%) hue-rotate(178deg) brightness(89%) contrast(98%);
+  filter: invert(60%) sepia(97%) saturate(523%) hue-rotate(178deg) brightness(89%) contrast(98%);
 }
 .icon-sidebar:hover {
   filter: none;

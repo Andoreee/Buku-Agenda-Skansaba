@@ -5,7 +5,6 @@ $(document).ready(function() {
     } );
   });
 
-
 function sidebar() {
     var display = document.getElementById("tooglesidebar");
     if (display.style.display === "none") {

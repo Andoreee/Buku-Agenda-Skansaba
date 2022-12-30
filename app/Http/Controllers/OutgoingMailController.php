@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
+use App\Models\OutgoingMail;
 use Illuminate\Http\Request;
 
 class OutgoingMailController extends Controller
@@ -14,7 +16,9 @@ class OutgoingMailController extends Controller
     public function index()
     {
         return view('outgoing-mail.index', [
-            'title' => 'Surat Keluar'
+            'title' => 'Surat Keluar',
+            'categories' => Category::latest()->get(),
+            'outgoingMails' => OutgoingMail::latest()->with('user', 'category')->limit(1000)->get()
         ]);
     }
 
@@ -25,7 +29,10 @@ class OutgoingMailController extends Controller
      */
     public function create()
     {
-        //
+        return view('outgoing-mail.create', [
+            'title' => 'Surat Keluar',
+            'categories' => Category::latest()->get()
+        ]);
     }
 
     /**
@@ -58,7 +65,17 @@ class OutgoingMailController extends Controller
      */
     public function edit($id)
     {
-        //
+        $outgoingMail = OutgoingMail::where('id', $id)->first();
+
+        if ($outgoingMail == null) {
+            return redirect()->back();
+        }
+
+        return view('outgoing-mail.edit', [
+            'title' => 'Surat Keluar',
+            'categories' => Category::latest()->get(),
+            'outgoingMail' => $outgoingMail
+        ]);
     }
 
     /**
