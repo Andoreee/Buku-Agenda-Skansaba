@@ -45,7 +45,7 @@
                                     <td>{{ $outgoingMail->tanggal_surat }}</td>
                                     <td>{{ $outgoingMail->no_surat }}</td>
                                     <td>{{ $outgoingMail->category->name }}</td>
-                                    <td>{{ $outgoingMail->pengirim }}</td>
+                                    <td>{{ $outgoingMail->tujuan }}</td>
                                     <td>{{ $outgoingMail->perihal }}</td>
                                     <td>
                                         <a class="btn btn-warning mb-2"

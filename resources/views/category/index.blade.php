@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="container-fluid">
-        
+
         <!-- Page Heading -->
         <div class="row mb-3">
             <div class="col-6">
@@ -23,17 +23,26 @@
                     <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                         <thead>
                             <tr>
-                                <th>All Kategori</th>
+                                <th>Nama</th>
+                                <th class="w-25">Aksi</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>
-                                    Undangan
-                                    <a class="btn btn-primary float-right ml-1" href="/admin/kategori/{{ 2 }}/edit">Edit</a>
-                                    <button class="btn btn-danger float-right">Hapus</button>
-                                </td>
-                            </tr>
+                            @foreach ($categories as $category)
+                                <tr>
+                                    <td>{{ $category->name }}</td>
+                                    <td>
+                                        <a class="btn btn-primary ml-1"
+                                            href="/admin/kategori/{{ $category->id }}/edit">Edit</a>
+                                        <form action="/admin/kategori/{{ $category->id }}" method="POST"
+                                            class="d-inline-block">
+                                            @method('delete')
+                                            @csrf
+                                            <button type="submit" class="btn btn-danger">Hapus</button>
+                                        </form>
+                                    </td>
+                                </tr>
+                            @endforeach
                         </tbody>
                     </table>
                 </div>

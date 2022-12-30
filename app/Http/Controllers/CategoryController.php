@@ -2,89 +2,85 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class CategoryController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
         return view('category.index', [
-            'title' => 'Semua Kategori'
+            'title' => 'Kategori',
+            'categories' => Category::latest()->limit(1000)->get()
         ]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
         return view('category.create', [
-            'title' => 'Semua Kategori'
+            'title' => 'Kategori'
         ]);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
-        //
+        $validatedData = $request->validate([
+            'name' => 'required|unique:categories|max:255'
+        ]);
+
+        $validatedData['slug'] = Str::slug($validatedData['name']);
+
+        Category::create($validatedData);
+        Alert::success("Berhasil", 'Berhasil Menambahkan Kategori');
+        return redirect('/admin/kategori');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function edit($id)
     {
+        $category = Category::where('id', $id)->first();
+
+        if ($category == null) {
+            return redirect()->back();
+        }
+
         return view('category.edit', [
-            'title' => 'Semua Kategori'
+            'title' => 'Kategori',
+            'category' => $category
         ]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, $id)
     {
-        //
+        if ($request->old_name == $request->name) {
+            $validatedData = $request->validate([
+                'name' => 'required|max:255'
+            ]);
+        } else {
+            $validatedData = $request->validate([
+                'name' => 'required|unique:categories|max:255'
+            ]);
+        }
+
+        $validatedData['slug'] = Str::slug($validatedData['name']);
+
+        Category::where('id', $id)->update($validatedData);
+        Alert::success("Berhasil", 'Berhasil Mengubah Kategori');
+        return redirect('/admin/kategori');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function destroy($id)
     {
-        //
+        $category = Category::where('id', $id)->first();
+
+        if ($category == null) {
+            return redirect()->back();
+        }
+
+        Category::destroy($category->id);
+
+        Alert::success('Berhasil', 'Berhasil Menghapus Data Kategori');
+        return redirect('/admin/kategori');
     }
 }

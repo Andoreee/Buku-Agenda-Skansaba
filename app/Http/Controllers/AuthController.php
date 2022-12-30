@@ -29,4 +29,11 @@ class AuthController extends Controller
         Alert::error('Login Gagal', 'Email atau Password Salah');
         return redirect('/admin/login');
     }
+
+    public function logout()
+    {
+        Auth::logout();
+
+        return redirect('/');
+    }
 }
