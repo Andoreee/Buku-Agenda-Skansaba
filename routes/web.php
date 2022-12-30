@@ -32,9 +32,9 @@ Route::group(['prefix' => 'admin'], function () {
     Route::group(['middleware' => 'auth'], function () {
         Route::get('/home', [HomeController::class, 'index'])->name('home');
 
-        Route::resource('/surat-masuk', IncomingMailController::class);
-        Route::resource('/surat-keluar', OutgoingMailController::class);
-        Route::resource('/kategori', CategoryController::class);
+        Route::resource('/surat-masuk', IncomingMailController::class)->except('show');
+        Route::resource('/surat-keluar', OutgoingMailController::class)->except('show');
+        Route::resource('/kategori', CategoryController::class)->except('show');
         Route::resource('/user', UserController::class);
     });
 });

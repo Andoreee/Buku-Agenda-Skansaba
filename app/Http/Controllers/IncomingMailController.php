@@ -2,92 +2,121 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
+use App\Models\IncomingMail;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class IncomingMailController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
         return view('incoming-mail.index', [
-            'title' => 'Surat Masuk'
+            'title' => 'Surat Masuk',
+            'categories' => Category::latest()->get(),
+            'incomingMails' => IncomingMail::latest()->with('user', 'category')->limit(1000)->get()
         ]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
         return view('incoming-mail.create', [
-            'title' => 'Surat Masuk'
+            'title' => 'Surat Masuk',
+            'categories' => Category::latest()->get()
         ]);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        return view('incoming-mail.index', [
-            'title' => 'Surat Masuk',
-            'detail' => $id
+        $validatedData = $request->validate([
+            'tanggal_terima' => 'required',
+            'tanggal_surat' => 'required',
+            'no_surat' => 'required|max:255|unique:incoming_mails',
+            'category_id' => 'required',
+            'pengirim' => 'required',
+            'perihal' => 'required',
+            'keterangan' => '',
+            'file' => 'required|file|image',
         ]);
+
+        $validatedData['user_id'] = Auth::user()->id;
+        $validatedData['file'] = $request->file('file')->store('incoming-mail-image');
+        IncomingMail::create($validatedData);
+
+        Alert::success('Berhasil', 'Berhasil Menambahkan Surat Masuk');
+        return redirect('/admin/surat-masuk');
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function edit($id)
     {
+        $incomingMail = IncomingMail::where('id', $id)->first();
+
+        if ($incomingMail == null) {
+            return redirect()->back();
+        }
+
         return view('incoming-mail.edit', [
-            'title' => 'Surat Masuk'
+            'title' => 'Surat Masuk',
+            'categories' => Category::latest()->get(),
+            'incomingMail' => $incomingMail
         ]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, $id)
     {
-        //
+        $incomingMail = IncomingMail::where('id', $id)->first();
+
+        if ($incomingMail == null) {
+            return redirect()->back();
+        }
+
+        $rules = [
+            'tanggal_terima' => 'required',
+            'tanggal_surat' => 'required',
+            'no_surat' => 'required|max:255',
+            'category_id' => 'required',
+            'pengirim' => 'required',
+            'perihal' => 'required',
+            'keterangan' => '',
+        ];
+
+        if ($request->use_file == 'true') {
+            $validatedData = $request->validate($rules);
+        } else {
+            $rules['file'] = 'required|file|image';
+            $validatedData = $request->validate($rules);
+        }
+
+        if ($request->use_file == 'true') {
+            $validatedData['file'] = $incomingMail->file;
+        } else {
+            Storage::delete($incomingMail->file);
+            $validatedData['file'] = $request->file('file')->store('incoming-mail-image');
+        }
+
+        $validatedData['user_id'] = Auth::user()->id;
+        IncomingMail::where('id', $id)->update($validatedData);
+
+        Alert::success('Berhasil', 'Berhasil Mengubah Surat Masuk');
+        return redirect('/admin/surat-masuk');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function destroy($id)
     {
-        //
+        $incomingMail = IncomingMail::where('id', $id)->first();
+
+        if ($incomingMail == null) {
+            return redirect()->back();
+        }
+
+        Storage::delete($incomingMail->file);
+
+        IncomingMail::destroy($incomingMail->id);
+
+        Alert::success('success', 'Data Surat Masuk Berhasil Dihapus');
+        return redirect('/admin/surat-masuk');
     }
 }
